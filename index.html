@@ -1,0 +1,154 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Where Do I Click? — Teacher Review (42 Questions)</title><style>
+*{box-sizing:border-box}body{margin:0;background:#e9edf3;color:#17243b;font:15px 'Segoe UI',Arial,sans-serif}.wrap{max-width:1100px;margin:18px auto;padding:0 12px}.card{background:white;border:1px solid #d4dce7;border-radius:12px;padding:16px;margin-bottom:12px}h1{margin:0 0 7px;font-size:24px}.small{font-size:12px;color:#52627a}.stats{display:flex;flex-wrap:wrap;gap:14px}.task{font-size:19px;font-weight:650;margin:7px 0}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #1670c9;outline-offset:2px}.btn{border:1px solid #c2cedd;background:#fff;border-radius:6px;padding:8px 12px;min-height:37px}.btn:hover{background:#e5f1ff}.primary{background:#0866b3;color:white;border-color:#0866b3}.primary:hover{background:#07518c}.app{border:1px solid #a9b9cb;border-radius:9px;overflow:hidden;min-height:380px;background:white}.titlebar{background:#e5edf8;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;font-size:13px}.tabs{display:flex;gap:5px;align-items:end;background:#e5edf8;padding:0 8px}.tab{border:0;background:#fff;border-radius:8px 8px 0 0;padding:9px 16px;max-width:260px}.chrome{display:flex;gap:7px;align-items:center;padding:8px;background:#fff;border-bottom:1px solid #dbe3ed}.icon{border:0;background:transparent;padding:7px 10px;border-radius:6px;min-width:35px}.icon:hover,.nav:hover{background:#e7f0fa}.address{border:1px solid #d8e0ea;background:#f4f6fa;border-radius:18px;padding:9px 14px;flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px}.browserbody{min-height:300px;background:#f8fafc;padding:24px}.webpage{background:white;border:1px solid #dce3ea;max-width:760px;margin:auto;border-radius:7px;overflow:hidden}.webhead{background:#164e74;color:white;padding:14px 18px;font-weight:700}.webcontent{padding:22px}.menu{position:absolute;right:12px;top:94px;width:245px;background:white;box-shadow:0 8px 26px #26354b40;border:1px solid #d6e0eb;border-radius:9px;padding:6px;z-index:2}.menu button{display:block;width:100%;border:0;background:white;text-align:left;padding:11px;border-radius:5px;font-size:13px}.menu button:hover{background:#e8f2fd}.relative{position:relative}.downloadpanel{position:absolute;right:10px;top:94px;width:min(310px,90%);background:white;border:1px solid #cbd6e2;box-shadow:0 8px 25px #26354b40;border-radius:10px;padding:15px;z-index:2}.outlooktop{background:#0f559c;color:white;display:flex;align-items:center;gap:12px;padding:10px}.outlooktop button{color:white}.outlooksearch{background:#e6f0fa;border:0;border-radius:5px;padding:9px;color:#233b56;flex:1;max-width:400px}.outlooklayout{display:grid;grid-template-columns:150px 230px minmax(0,1fr);min-height:350px}.outlookside{background:#f2f6fb;padding:10px;border-right:1px solid #dce4ed}.active-folder{background:#dbeafe!important;font-weight:700}.nav{display:block;border:0;background:transparent;width:100%;text-align:left;padding:10px;border-radius:5px;font-size:13px}.messages{border-right:1px solid #dce4ed}.msg{border:0;border-bottom:1px solid #e1e7ef;background:white;width:100%;text-align:left;padding:13px 9px;font-size:12px}.msg.active{background:#e4f1ff;border-left:3px solid #146fc1}.reading{padding:16px;min-width:0}.tools{display:flex;flex-wrap:wrap;gap:5px;border-bottom:1px solid #e0e5ed;padding:8px}.filegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.file{border:1px solid #d7e0ea;border-radius:7px;padding:12px;background:white;text-align:left}.file.selected{background:#d9ebff;border-color:#1476c7}.feedback{min-height:26px;font-weight:600}.helpbox{background:#f0f6fc;border:1px solid #b6cee6;padding:12px;border-radius:8px}.last-clicked{background:#ffefae!important;color:#18263a!important;outline:3px solid #d18b00!important;outline-offset:-3px;box-shadow:inset 0 0 0 1px #d18b00!important}.hidden{display:none!important}@media(max-width:720px){.outlooklayout{grid-template-columns:90px minmax(0,1fr)}.outlookside{padding:5px}.messages{display:block;min-width:115px}.outlooklayout{grid-template-columns:95px 135px minmax(0,1fr)}.reading{padding:9px}.browserbody{padding:9px}.webcontent{padding:12px}.tab{max-width:180px}.wrap{padding:0 6px}}
+
+.teacherbar{background:#fff8e7;border:1px solid #e6c982;border-radius:12px;padding:15px;margin-bottom:12px}.teacherbar select{padding:9px;max-width:100%;border:1px solid #9aabc0;border-radius:6px}.answerkey{background:#edf8ef;border:1px solid #a5cfab;border-radius:8px;padding:12px;margin-top:12px}.teacherbuttons{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.teacherbuttons button{padding:9px 12px;border-radius:6px;border:1px solid #a9b9cb;background:white}.reviewlist{max-height:200px;overflow:auto;background:white;border:1px solid #d9e1eb;border-radius:6px;padding:8px;margin-top:10px}.reviewlist button{display:block;text-align:left;width:100%;padding:8px;border:0;border-bottom:1px solid #eee;background:white}.reviewlist button:hover{background:#e8f2ff}
+
+.success-shade{position:fixed;inset:0;background:rgba(15,30,52,.56);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.success-dialog{background:#fff;border:5px solid #13834d;border-radius:20px;box-shadow:0 20px 70px #071a2e80;max-width:470px;width:100%;padding:30px;text-align:center}
+.success-icon{font-size:64px;line-height:1.1}.success-title{font-size:32px;font-weight:800;color:#08663c;margin:10px 0}.success-subtitle{font-size:17px;line-height:1.5;margin:8px 0 22px}.success-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.success-actions button{font-size:17px;font-weight:700;padding:13px 18px;border-radius:9px}.success-next{background:#0866b3;color:white;border:2px solid #0866b3}.success-review{background:white;border:2px solid #9aa9bc}
+.download-tools{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:12px 0}.download-tools label{font-weight:600}.download-tools input{font:inherit;padding:8px;border:1px solid #9aabc0;border-radius:7px;max-width:220px}.download-tools button{font-size:15px}</style></head><body><div class="wrap"><div class="card"><h1>Where Do I Click? 💻</h1><div class="download-tools"><label for="studentName">Name: <input id="studentName" type="text" placeholder="Enter your name" autocomplete="name"></label><button class="btn primary" id="downloadTop" type="button">⬇ Download Results</button></div><div class="stats small"><span id="progress"></span><span id="score"></span></div><div class="task" id="task"></div><div id="stepinfo" class="small" style="margin-top:6px"></div></div><div class="app relative" id="app"></div><div class="card"><div id="feedback" class="feedback" aria-live="polite"></div><div id="hint" class="helpbox hidden" aria-live="polite"></div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:9px"><button class="btn" id="help">I Need Help</button><button class="btn primary hidden" id="next">Next Question</button><button class="btn" id="restart">Start New 15-Question Run</button><button class="btn primary" id="downloadBottom" type="button">⬇ Download Results</button></div></div><div class="card hidden" id="results"></div></div><div id="successShade" class="success-shade hidden" role="dialog" aria-modal="true" aria-labelledby="successTitle"><div class="success-dialog"><div class="success-icon" aria-hidden="true">🎉</div><div class="success-title" id="successTitle">Correct!</div><div class="success-subtitle" id="successSubtitle"></div><div class="success-actions"><button class="success-review" id="successReview">Look at my answer</button><button class="success-next" id="successNext">Next Question →</button></div></div></div><script>
+const $=id=>document.getElementById(id);
+const bank=[
+{app:'edge',task:'Where would you click to see files you downloaded in Edge?',steps:['Downloads'],hints:['You need to see files recently downloaded.','Look near the top-right of Edge.','The downward arrow opens Downloads.']},
+{app:'edge',task:'Where would you click to see more choices in Edge?',steps:['More'],hints:['Some controls are hidden in a menu.','Look in the upper-right corner.','Select the three dots (⋯).']},
+{app:'edge',task:'Where would you click to open another tab?',steps:['New Tab'],hints:['You need a second tab, not a new window.','Look beside the existing tab at the top.','Select the plus sign (+).']},
+{app:'edge',task:'Where would you click to go back to the last webpage?',steps:['Back'],hints:['You are returning to a page you visited.','Look to the left of the address bar.','Choose the left-pointing arrow.']},
+{app:'edge',task:'Where would you click to reload this webpage?',steps:['Refresh'],hints:['You want to load this same page again.','Look near the Back button.','Select the circular arrow.']},
+{app:'edge',task:'Where would you click to download the worksheet?',steps:['Download worksheet'],hints:['The webpage has a worksheet available.','Look inside the page, not only the browser toolbar.','Select Download worksheet.']},
+{app:'edge',task:'Where would you click to find your downloaded worksheet and see its folder?',steps:['Downloads','Show in folder'],hints:['First find the browser’s download history.','Open Downloads using the downward arrow at the top.','Then select the folder icon beside Workplace Worksheet.pdf.']},
+{app:'edge',task:'Where would you click to open Edge Settings?',steps:['More','Settings'],hints:['Settings are not shown directly on this page.','Open the upper-right three-dot menu.','Select Settings from that menu.']},
+{app:'edge',task:'Where would you click to print this worksheet?',steps:['Print worksheet'],hints:['You need a paper copy.','Look at the worksheet actions on the page.','Select Print worksheet.']},
+{app:'edge',task:'Where would you click to type a web search?',steps:['Address Bar'],hints:['You need to enter a search or website address.','Look along the top of the browser.','Select the long address/search bar.']},
+{app:'outlook',task:'Where would you click to reply to Dawn’s email?',steps:['Reply'],hints:['You need to answer the person who sent the email.','Look in the message toolbar.','Select Reply, not Forward.']},
+{app:'outlook',task:'Where would you click to forward Dawn’s email to Kaitlyn?',steps:['Forward'],hints:['You want to send this message to a different person.','Look above the message.','Select Forward.']},
+{app:'outlook',task:'Where would you click to reply to everyone on this email?',steps:['Reply all'],hints:['Your answer needs to reach all recipients.','Look at the reply choices.','Select Reply all.']},
+{app:'outlook',task:'Where would you click to start a new email?',steps:['New mail'],hints:['You are not answering an existing email.','Look near the upper-left of Outlook.','Select New mail.']},
+{app:'outlook',task:'Where would you click to search for an older email?',steps:['Search mail'],hints:['You do not need to scroll through every message.','Look at the blue bar at the top.','Select Search mail.']},
+{app:'outlook',task:'Where would you click to open the PDF attached to Dawn’s email?',steps:['Rotation Schedule.pdf'],hints:['The file is part of the message.','Look below the message text.','Select the attachment named Rotation Schedule.pdf.']},
+{app:'outlook',task:'Where would you click to report this suspicious email asking for your password?',steps:['Report phishing'],hints:['The message is asking for a password.','Look for the security reporting tool above the email.','Select Report phishing.']},
+{app:'outlook',task:'Where would you click to see emails you already sent?',steps:['Sent Items'],hints:['You want messages you already sent.','Look at the folder list on the left.','Select Sent Items.']},
+{app:'outlook',task:'Where would you click to find an email you started but did not send?',steps:['Drafts'],hints:['Unsent messages can be saved automatically.','Look at the folder list.','Select Drafts.']},
+{app:'outlook',task:'Where would you click to open the email from Kaitlyn in your Inbox?',steps:['Inbox','Kaitlyn message'],hints:['First go to the folder where new emails arrive.','Select Inbox on the left. Then find Kaitlyn in the email list.','Select Inbox, then select Kaitlyn · Reminder.']},
+{app:'outlook',task:'Where would you click to start a new email and attach a file?',steps:['New mail','Attach'],hints:['First start a message.','Select New mail, then find the attachment control.','Use the paperclip labeled Attach.']},
+{app:'outlook',task:'Where would you click to start a new email and then send it?',steps:['New mail','Send'],hints:['First start a new message.','Find New mail, then the send control in the compose area.','Select Send after opening the compose window.']}
+,{app:'edge',task:'Where would you click to save this webpage to your Favorites?',steps:['Favorite'],hints:['You want to save the page so you can find it again.','Look near the right end of the address bar.','Select the star (☆).']}
+,{app:'edge',task:'Where would you click to open the file you downloaded?',steps:['Downloads','Open download'],hints:['First find the list of downloaded files.','Look for the down arrow near the top-right.','Open Downloads, then choose Open file.']}
+,{app:'edge',task:'Where would you click to see webpages you visited before?',steps:['More','History'],hints:['The browser keeps a list of visited pages.','Look inside the three-dot menu.','Select History.']}
+,{app:'edge',task:'Where would you click to see your saved Favorites?',steps:['More','Favorites'],hints:['Favorites are webpages you saved.','Open the three-dot menu.','Select Favorites.']}
+,{app:'edge',task:'Where would you click to open a new browser window?',steps:['More','New window'],hints:['You need a separate window, not another tab.','Look in the three-dot menu.','Select New window.']}
+,{app:'edge',task:'Where would you click to print using the Edge menu?',steps:['More','Print'],hints:['You want to print from the browser menu.','Open the three dots in the upper-right.','Select Print.']}
+,{app:'edge',task:'Where would you click to find Help in Edge?',steps:['More','Help'],hints:['You need browser help.','Open the three-dot menu.','Select Help.']}
+,{app:'edge',task:'Where would you click to view the worksheet on this webpage?',steps:['View worksheet'],hints:['You want to look at the worksheet before downloading it.','Look at the buttons on the webpage.','Select View worksheet.']}
+,{app:'edge',task:'Where would you click to share this webpage?',steps:['Share page'],hints:['You want to send someone a link to this page.','Look inside the webpage.','Select Share.']}
+,{app:'edge',task:'Where would you click to see the Edge Downloads list using the menu?',steps:['More','Downloads'],hints:['Downloads can also be found in the browser menu.','Open the three dots in the top-right.','Select Downloads from the menu.']}
+,{app:'outlook',task:'Where would you click to see emails in your Junk Email folder?',steps:['Junk Email'],hints:['Sometimes unwanted emails go to a separate folder.','Look in the folder list on the left.','Select Junk Email.']}
+,{app:'outlook',task:'Where would you click to find an email you deleted?',steps:['Deleted Items'],hints:['Deleted messages may still be in a folder.','Look at the folder list on the left.','Select Deleted Items.']}
+,{app:'outlook',task:'Where would you click to see emails you archived?',steps:['Archive'],hints:['Archived emails are saved but not in your Inbox.','Look in the folder list on the left.','Select Archive.']}
+,{app:'outlook',task:'Where would you click to delete the email you are reading?',steps:['Delete'],hints:['You do not need to keep this message.','Look at the toolbar above the emails.','Select the trash can labeled Delete.']}
+,{app:'outlook',task:'Where would you click to archive the email you are reading?',steps:['Archive message'],hints:['You want to keep the message without leaving it in your Inbox.','Look at the toolbar above the emails.','Select Archive.']}
+,{app:'outlook',task:'Where would you click to start an email and save it without sending?',steps:['New mail','Save draft'],hints:['First open a blank email.','Select New mail. Then look at the choices below the message.','Select Save draft.']}
+,{app:'outlook',task:'Where would you click to start an email and then throw it away?',steps:['New mail','Discard'],hints:['First open a new message.','Select New mail. Then look in the compose area.','Select Discard.']}
+,{app:'outlook',task:'Where would you click to open the Inbox?',steps:['Inbox'],hints:['The Inbox shows mail you received.','Look at the folder list on the left.','Select Inbox.']}
+,{app:'outlook',task:'Where would you click to open the Friday Update email from Team?',steps:['Team message'],hints:['Find the email from Team.','Look in the list of messages in the middle.','Select Team · Friday Update.']}
+,{app:'outlook',task:'Where would you click to open Outlook Settings?',steps:['Settings'],hints:['You want to change Outlook options.','Look along the blue bar at the top.','Select the gear symbol (⚙).']}
+
+];
+let run=[],index=0,stage=0,wrong=0,helpCount=0,done=false,stats=[0,0,0],history=[],view={},lastClicked=null;
+bank.splice(31,1);bank.splice(27,1);bank.splice(26,1);
+function mix(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function b(label,text,cls='btn'){let x=document.createElement('button');x.className=cls;x.textContent=text||label;x.onclick=()=>{lastClicked={label,text:x.textContent};click(label)};if(lastClicked&&lastClicked.label===label&&lastClicked.text===x.textContent)x.classList.add('last-clicked');return x}
+function div(cls='',text=''){let d=document.createElement('div');d.className=cls;d.textContent=text;return d}
+function click(action){if(done)return;const q=run[index];if(action===q.steps[stage]){stage++;view.menu=action==='More';view.downloads=action==='Downloads';view.compose=action==='New mail'||view.compose;if(action==='Inbox')view.folder='Inbox';if(action==='Kaitlyn message')view.selected='Kaitlyn message';if(stage>=q.steps.length){done=true;const k=helpCount?2:wrong?1:0;stats[k]++;history.push({task:q.task,result:['Independent','Self-corrected','With help'][k],hints:helpCount,wrong});renderApp();$('feedback').textContent=['✓ Correct — independently!','✓ Correct — you self-corrected!','✓ Correct — with help!'][k];$('next').classList.remove('hidden');$('next').textContent=index===run.length-1?'See Results':'Next Question';$('help').disabled=true;showSuccess(k)}else{$('feedback').textContent='Good! Step '+stage+' is done. Now find the next place to click.';renderApp()}updateStats();return}
+wrong++;$('feedback').textContent='That control does something else. Try again.';
+if(action==='More'){view.menu=!view.menu;view.downloads=false}else if(action==='Downloads'){view.downloads=!view.downloads;view.menu=false}else if(action==='New mail'){view.compose=true}else if(action==='Kaitlyn message'){view.selected='Kaitlyn message'}else if(action==='Team message'){view.selected='Team message'}else if(action==='Dawn message'){view.selected='Dawn message'}else if(['Inbox','Archive','Junk Email','Sent Items','Drafts','Deleted Items'].includes(action)){view.folder=action;view.selected='Dawn message'}renderApp();}
+function renderEdge(){const app=$('app');app.replaceChildren();app.appendChild(div('titlebar','🌐 Microsoft Edge                                             —    □    ×'));let tabs=div('tabs');tabs.append(b('Current Tab','Workplace Skills  ×','tab'));tabs.append(b('New Tab','＋','icon'));app.append(tabs);let chrome=div('chrome');[['Back','←'],['Forward','→'],['Refresh','↻']].forEach(a=>chrome.append(b(...a,'icon')));chrome.append(b('Address Bar','🔒  https://training.example/worksheets','address'));[['Favorite','☆'],['Downloads','⬇'],['Profile','◉'],['More','⋯']].forEach(a=>chrome.append(b(...a,'icon')));app.append(chrome);
+let body=div('browserbody');let page=div('webpage');page.append(div('webhead','Workplace Learning Center'));let content=div('webcontent');let h=document.createElement('h2');h.textContent='Workplace Skills Worksheets';h.style.margin='0 0 12px';content.append(h);content.append(div('small','Practice workplace reading, computer skills, and following directions.'));let p=document.createElement('p');p.textContent='Featured resource: Workplace Worksheet.pdf';content.append(p);let actions=div('toolbar');actions.style.display='flex';actions.style.flexWrap='wrap';actions.style.gap='8px';[['Download worksheet','⬇ Download worksheet'],['Print worksheet','🖨 Print worksheet'],['View worksheet','👁 View worksheet'],['Share page','↗ Share']].forEach(a=>actions.append(b(...a)));content.append(actions);let links=div('small');links.style.marginTop='25px';links.textContent='Home   |   Resources   |   Contact   |   Help Center';content.append(links);page.append(content);body.append(page);app.append(body);
+if(view.menu){let menu=div('menu');[['New window','New window'],['History','History'],['Downloads','Downloads'],['Favorites','Favorites'],['Print','Print'],['Settings','⚙ Settings'],['Help','Help']].forEach(a=>menu.append(b(...a)));app.append(menu)}
+if(view.downloads){let panel=div('downloadpanel');panel.append(div('font-bold','Downloads'));panel.append(div('small','Recent files'));let file=div('card');file.style.padding='10px';file.style.margin='10px 0 0';file.append(div('','📄 Workplace Worksheet.pdf'));file.append(b('Show in folder','📁 Show in folder'));file.append(b('Open download','Open file'));panel.append(file);app.append(panel)}
+}
+function renderOutlook(){
+ const app=$('app');app.replaceChildren();
+ const top=div('outlooktop');top.append(div('','▦ Outlook'));top.append(b('Search mail','🔍 Search mail','outlooksearch'));top.append(b('Settings','⚙','icon'));top.append(b('Help','?','icon'));app.append(top);
+ const tools=div('tools');[['New mail','＋ New mail'],['Delete','🗑 Delete'],['Archive message','Archive'],['Report phishing','🐟 Report phishing']].forEach(a=>tools.append(b(...a)));app.append(tools);
+ const layout=div('outlooklayout');const side=div('outlookside');
+ [['Inbox','📥 Inbox'],['Sent Items','✉ Sent Items'],['Drafts','📝 Drafts'],['Deleted Items','🗑 Deleted Items'],['Archive','▣ Archive'],['Junk Email','⚠ Junk Email']].forEach(a=>side.append(b(...a,'nav'+(view.folder===a[0]?' active-folder':''))));layout.append(side);
+ const msgs=div('messages');const phishing=run[index].steps.includes('Report phishing');
+ const available=phishing?[
+ ['Suspicious message','IT Support · ACTION REQUIRED','Password Verification Needed'],
+ ['Dawn message','Dawn · Rotation Schedule','Tomorrow’s Rotation Schedule'],
+ ['Kaitlyn message','Kaitlyn · Reminder','Workday Reminder']
+ ]:view.folder==='Archive'?[
+ ['Dawn message','Dawn · Rotation Schedule','Tomorrow’s Rotation Schedule']
+ ]:[
+ ['Dawn message','Dawn · Rotation Schedule','Tomorrow’s Rotation Schedule'],
+ ['Kaitlyn message','Kaitlyn · Reminder','Workday Reminder'],
+ ['Team message','Team · Friday Update','Friday Update']
+ ];
+ if(phishing&&view.selected==='Dawn message')view.selected='Suspicious message';
+ available.forEach(a=>{const btn=b(a[0],a[1]+' · '+a[2],'msg'+(view.selected===a[0]?' active':''));msgs.append(btn)});layout.append(msgs);
+ const read=div('reading');
+ if(view.compose){read.append(div('text-lg font-semibold','New message'));const to=document.createElement('input');to.placeholder='To';to.style.cssText='width:100%;padding:10px;margin:10px 0;border:1px solid #cbd5e1';read.append(to);const subject=document.createElement('input');subject.placeholder='Subject';subject.style.cssText=to.style.cssText;read.append(subject);const msg=document.createElement('textarea');msg.placeholder='Write your message here...';msg.style.cssText='width:100%;min-height:95px;border:1px solid #cbd5e1;padding:10px';read.append(msg);const bar=div('tools');[['Send','➤ Send'],['Attach','📎 Attach'],['Save draft','Save draft'],['Discard','Discard']].forEach(a=>bar.append(b(...a)));read.append(bar)}
+ else{
+ const suspicious=phishing&&view.selected==='Suspicious message';
+ const kaitlyn=view.selected==='Kaitlyn message';const team=view.selected==='Team message';
+ read.append(div('font-bold',suspicious?'URGENT: Verify Your Account':kaitlyn?'Workday Reminder':team?'Friday Update':'Tomorrow’s Rotation Schedule'));
+ read.append(div('small',suspicious?'From: IT Help Desk <support@account-check.example> · To: You':kaitlyn?'From: Kaitlyn · To: Intern Team':team?'From: Team · To: Intern Team':'From: Dawn · To: Intern Team'));
+ const toolbar=div('tools');[['Reply','↩ Reply'],['Reply all','↩↩ Reply all'],['Forward','↪ Forward'],['More','⋯']].forEach(a=>toolbar.append(b(...a)));read.append(toolbar);
+ const message=div('');message.style.marginTop='20px';
+ if(suspicious){message.innerHTML='<p>Hello,</p><p><strong>URGENT:</strong> Your work email will be locked today unless you verify your password.</p><p>Click the link below and enter your work username and password right away.</p><p><a href="#" class="fake-phish-link">Verify your account now</a></p><p>Do not tell your supervisor. This request is confidential.</p><p>Thank you,<br>IT Help Desk</p>';}
+ else if(kaitlyn){message.innerHTML='Hi Team,<p>Please remember to check your tasks before leaving today.</p>Thanks,<br>Kaitlyn';}
+ else if(team){message.innerHTML='Hi Everyone,<p>Thank you for your work this week!</p>Have a good weekend,<br>Team';}
+ else{message.innerHTML='Hi Team,<p>Please review the attached rotation schedule before tomorrow.</p>Thanks,<br>Dawn';}
+ read.append(message);
+ if(!suspicious&&!kaitlyn&&!team)read.append(b('Rotation Schedule.pdf','📄 Rotation Schedule.pdf'));
+ if(suspicious){const link=message.querySelector('.fake-phish-link');link.addEventListener('click',e=>{e.preventDefault();lastClicked={label:'Suspicious link',text:'Verify your account now'};click('Suspicious link')});}
+ }
+ layout.append(read);app.append(layout)
+}
+function renderApp(){if(run[index].app==='edge')renderEdge();else renderOutlook()}
+function updateStats(){$('score').textContent=`${stats[0]} independent · ${stats[1]} self-corrected · ${stats[2]} with help`}
+function showSuccess(k){$('successSubtitle').textContent=['You found it on your own!','You figured it out after trying again!','You found it using help!'][k];$('successNext').textContent=index===run.length-1?'See Results →':'Next Question →';$('successShade').classList.remove('hidden');$('successNext').focus()}
+function hideSuccess(){$('successShade').classList.add('hidden')}
+$('successReview').onclick=hideSuccess;
+$('successNext').onclick=()=>{hideSuccess();$('next').click()};
+function render(){hideSuccess();stage=0;wrong=0;helpCount=0;done=false;view={folder:'Inbox',selected:run[index].steps.includes('Report phishing')?'Suspicious message':'Dawn message'};lastClicked=null;$('progress').textContent=`Question ${index+1} of ${run.length} · ${run[index].app==='edge'?'Microsoft Edge':'Outlook'}`;$('task').textContent=run[index].task;const stepInfo=$('stepinfo');stepInfo.textContent=run[index].steps.length>1?'This task has '+run[index].steps.length+' steps. Do one step at a time.':'';$('feedback').textContent='';$('hint').classList.add('hidden');$('next').classList.add('hidden');$('help').disabled=false;$('help').textContent='I Need Help';renderApp();updateStats()}
+$('help').onclick=()=>{if(done)return;helpCount=Math.min(3,helpCount+1);let q=run[index];let hint=q.hints[helpCount-1];if(stage>0){const next=q.steps[stage];hint=helpCount===1?'You finished the first step. Look at what is open on the screen now.':helpCount===2?'Look inside the open '+(q.app==='edge'?'panel or menu.':'message window.'):'Find the option labeled '+next+'.'}$('hint').textContent=`Help ${helpCount} of 3: ${hint}`;$('hint').classList.remove('hidden');$('help').textContent=helpCount<3?'I Need More Help':'All Hints Shown';$('help').disabled=helpCount>=3};
+$('next').onclick=()=>{index++;$('help').textContent='I Need Help';if(index<run.length)render();else finish()};$('restart').onclick=start;
+function finish(){$('app').classList.add('hidden');$('help').classList.add('hidden');$('next').classList.add('hidden');$('task').textContent='Your Technology Skills Results';$('progress').textContent='15 questions completed';$('feedback').textContent='';let box=$('results');box.classList.remove('hidden');box.replaceChildren();let h=document.createElement('h2');h.textContent=`Independent: ${stats[0]} · Self-corrected: ${stats[1]} · With help: ${stats[2]}`;box.append(h);history.forEach((x,i)=>{let p=document.createElement('p');p.textContent=`${i+1}. ${x.result} (${x.hints} hints, ${x.wrong} incorrect clicks) — ${x.task}`;box.append(p)});let copy=b('Copy Results','Copy Results');copy.onclick=()=>{let t=history.map((x,i)=>`${i+1}. ${x.result} (${x.hints} hints, ${x.wrong} wrong clicks): ${x.task}`).join('\n');navigator.clipboard?.writeText(t).then(()=>copy.textContent='Copied!').catch(()=>copy.textContent='Copy unavailable')};box.append(copy)}
+function downloadResults(){
+  const name=$('studentName').value.trim()||'Student';
+  const completed=history.length;
+  const lines=[
+    'WHERE DO I CLICK? — PROGRESS REPORT',
+    'Student: '+name,
+    'Date: '+new Date().toLocaleString(),
+    'Questions completed: '+completed+' of '+run.length,
+    'Independent: '+stats[0],
+    'Self-corrected: '+stats[1],
+    'With help: '+stats[2],
+    'Not yet completed: '+(run.length-completed),
+    '',
+    'QUESTION DETAILS'
+  ];
+  history.forEach((x,i)=>lines.push(
+    (i+1)+'. '+x.task+'\n   Result: '+x.result+
+    ' | Help hints used: '+x.hints+
+    ' | Incorrect clicks: '+x.wrong
+  ));
+  if(completed<run.length)lines.push('','This is an in-progress report. Unfinished questions are not scored.');
+  const blob=new Blob([lines.join('\n')+'\n'],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const safe=name.replace(/[^a-z0-9_-]+/gi,'_').replace(/^_+|_+$/g,'')||'Student';
+  a.href=url;
+  a.download='Where_Do_I_Click_Results_'+safe+'.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+$('downloadTop').onclick=downloadResults;
+$('downloadBottom').onclick=downloadResults;
+function start(){run=mix([...mix(bank.filter(q=>q.app==='edge')).slice(0,8),...mix(bank.filter(q=>q.app==='outlook')).slice(0,7)]);index=0;stats=[0,0,0];history=[];$('app').classList.remove('hidden');$('results').classList.add('hidden');$('help').classList.remove('hidden');$('help').textContent='I Need Help';render()}
+start();
+</script></body></html>
