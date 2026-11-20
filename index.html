@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math at Work — Auto Save</title>
+<style>
+:root{
+  --bg:#f4f7fb; --card:#fff; --ink:#172033; --muted:#5e6b7a;
+  --line:#d9e1ea; --accent:#2457c5; --accent2:#eaf0ff;
+  --good:#147a4b; --goodbg:#e9f7ef; --warn:#9a6500; --warnbg:#fff5d9;
+  --bad:#a43a3a; --badbg:#fff0f0;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);font-size:18px}
+.app{max-width:920px;margin:0 auto;padding:24px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.brand{font-size:28px;font-weight:800}
+.progress-wrap{flex:1;max-width:420px}
+.progress-label{font-size:14px;color:var(--muted);margin-bottom:5px;text-align:right}
+.progress{height:12px;background:#e3e9f0;border-radius:999px;overflow:hidden}
+.progress > div{height:100%;background:var(--accent);width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 6px 18px rgba(20,40,80,.06)}
+h1{font-size:36px;margin:0 0 10px}
+h2{font-size:28px;margin:0 0 14px}
+h3{font-size:21px;margin:22px 0 10px}
+p{line-height:1.5}
+.big{font-size:23px}
+.muted{color:var(--muted)}
+.level-tag{display:inline-block;background:var(--accent2);color:var(--accent);font-weight:700;border-radius:999px;padding:7px 12px;margin-bottom:12px}
+.problem{font-size:25px;line-height:1.45;font-weight:700;margin:18px 0}
+.refbox{border:2px solid var(--line);border-radius:14px;padding:14px 18px;margin:16px 0;background:#fbfcfe}
+table{border-collapse:collapse;width:100%;font-size:18px}
+th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left}
+input[type=text], input[type=number]{font-size:24px;padding:12px 14px;border:2px solid #aeb9c7;border-radius:10px;width:180px;max-width:100%}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.choice{font-size:21px;padding:16px;border:2px solid #b8c3d0;border-radius:12px;background:#fff;cursor:pointer;text-align:center;font-weight:700}
+.choice:hover,.choice:focus{border-color:var(--accent);outline:none}
+.choice.selected{border-color:var(--accent);background:var(--accent2)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+button{font:inherit;font-weight:700;border-radius:11px;padding:12px 17px;border:2px solid transparent;cursor:pointer}
+.primary{background:var(--accent);color:#fff}
+.secondary{background:#fff;color:var(--ink);border-color:#b8c3d0}
+.help{background:var(--warnbg);color:#684500;border-color:#e6c768}
+.feedback{margin-top:18px;padding:15px 17px;border-radius:12px;display:none;line-height:1.45}
+.feedback.good{display:block;background:var(--goodbg);color:#0e5d39;border:1px solid #a9d8be}
+.feedback.try{display:block;background:var(--badbg);color:#7d2d2d;border:1px solid #e4b6b6}
+.helpbox{margin-top:16px;background:var(--warnbg);border:1px solid #e6c768;border-radius:12px;padding:16px;display:none;line-height:1.5}
+.helpbox strong{display:block;margin-bottom:6px}
+.start-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+.note{background:#f8fafc;border-left:5px solid var(--accent);padding:14px 16px;border-radius:8px}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.result-row{border:1px solid var(--line);border-radius:12px;padding:14px}
+.small{font-size:14px}
+@media(max-width:650px){.choices,.start-grid,.results-grid{grid-template-columns:1fr}.app{padding:12px}.card{padding:20px}h1{font-size:31px}.problem{font-size:22px}}
+@media print{body{background:white}.actions,.progress-wrap{display:none}.card{box-shadow:none;border:none}.app{max-width:none}}
+</style>
+
+<style>
+#morehelpbox{
+  display:none;
+  width:100%;
+  max-width:none;
+  box-sizing:border-box;
+  white-space:normal;
+  word-break:normal;
+  overflow-wrap:normal;
+  line-height:1.55;
+}
+#morehelpbox strong{display:inline;}
+#morehelpbox .help-line{margin:.45rem 0;}
+#morehelpbox .help-gap{height:.45rem;}
+</style>
+
+<style>
+.nextbar{position:sticky;bottom:10px;z-index:30;margin-top:10px;padding:8px;background:rgba(255,255,255,.97);border-radius:12px;box-shadow:0 3px 14px rgba(0,0,0,.18)}
+.nextbar button{width:100%;font-size:1.05rem}
+</style></head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">Math at Work</div>
+  <div class="progress-wrap" id="progressWrap" style="display:none">
+    <div class="progress-label" id="progressLabel"></div>
+    <div class="progress"><div id="progressBar"></div></div>
+  </div>
+</header>
+<div id="onlineSaveStatus" role="status" aria-live="polite" style="position:sticky;top:0;z-index:60;max-width:960px;margin:8px auto;padding:12px 16px;border:3px solid #1677c8;border-radius:10px;background:#eaf7ff;font-size:16px;font-weight:700;box-shadow:0 3px 12px #0002">Online results: ready. Complete a question to save it. <button type="button" style="margin-left:12px;padding:5px 10px" onclick="mathFlushPending()">Retry sending</button></div>
+<main id="main"></main>
+</div>
+
+<script>
+const questionBank = [
+{level:"Let's Practice",skill:"Counting & Adding",type:"mc",q:"A supply cart has 6 towels. You add 7 more towels. How many towels are on the cart now?",choices:["11","12","13","14"],answer:"13",help:"You are putting two groups together. Try adding the two amounts."},
+{level:"Let's Practice",skill:"Counting & Adding",type:"number",q:"There are 9 boxes on one shelf and 5 boxes on another shelf. How many boxes are there altogether?",answer:"14",help:"“Altogether” means put the groups together. Try adding."},
+{level:"Let's Practice",skill:"How Many More?",type:"mc",q:"A shelf should have 20 masks. You count 15. How many more masks are needed?",choices:["3","5","15","35"],answer:"5",help:"You need to find how many are missing. Think about how many you NEED and how many you HAVE. Try subtracting."},
+{level:"Let's Practice",skill:"Time",type:"mc",q:"Break starts at 10:15 AM and lasts 15 minutes. What time does break end?",choices:["10:20 AM","10:25 AM","10:30 AM","10:45 AM"],answer:"10:30 AM",help:"This question asks when the break will end. Start at the beginning time and count forward by the length of the break."},
+
+{level:"At Work",skill:"Counting & Adding",type:"number",q:"You stock 8 gowns in the morning and 6 more after lunch. How many gowns did you stock altogether?",answer:"14",help:"You are combining the morning and afternoon amounts. Try adding."},
+{level:"At Work",skill:"Counting & Adding",type:"mc",q:"A cart has 12 clean cloths. You add 9 more. How many clean cloths are on the cart?",choices:["19","20","21","22"],answer:"21",help:"You are adding another group to what is already there. Try adding."},
+{level:"At Work",skill:"How Many More?",type:"number",q:"A bin should have 30 pairs of gloves. You count 22. How many more pairs are needed?",answer:"8",help:"Find the difference between what you NEED and what you HAVE. Try subtracting."},
+{level:"At Work",skill:"How Many More?",subtype:"enoughCheck",type:"mc",q:"A shelf should have at least 20 masks. You count 23. How many masks do you need to add?",choices:["0","3","20","43"],answer:"0",help:"Compare how many you have with the goal. If you already have enough, think about whether anything needs to be added."},
+{level:"At Work",skill:"How Many More?",type:"number",q:"You need 15 gowns. There are 9. How many more gowns are needed?",answer:"6",help:"Think about how many you NEED and how many you HAVE. Find how many are missing by subtracting."},
+{level:"At Work",skill:"How Many More?",type:"mc",q:"A cooler should have 12 drinks. It has 7. How many more drinks are needed?",choices:["4","5","7","19"],answer:"5",help:"Find how many are missing. Think about how many you NEED and how many you HAVE. Try subtracting."},
+
+{level:"Time on the Job",skill:"Time",subtype:"between",type:"mc",q:"It is 1:20 PM. You leave for the shuttle at 1:45 PM. How many minutes do you have?",choices:["15","20","25","35"],answer:"25",help:"This asks how much time there is between two times. Start at the earlier time and count forward to the later time."},
+{level:"Time on the Job",skill:"Time",type:"mc",q:"You start cleaning at 9:10 AM. The task takes 20 minutes. What time will you finish?",choices:["9:20 AM","9:25 AM","9:30 AM","9:40 AM"],answer:"9:30 AM",help:"This asks when you will finish. Start at the beginning time and count forward by the number of minutes the task takes."},
+{level:"Time on the Job",skill:"Time",type:"mc",q:"Lunch starts at 11:30 AM. It lasts 30 minutes. What time does lunch end?",choices:["11:45 AM","12:00 PM","12:15 PM","12:30 PM"],answer:"12:00 PM",help:"This asks when lunch ends. Start at the beginning time and count forward by the length of lunch."},
+{level:"Time on the Job",skill:"Time",subtype:"between",type:"mc",q:"It is 2:35 PM. Your meeting starts at 3:00 PM. How many minutes until the meeting?",choices:["15","20","25","35"],answer:"25",help:"This asks how much time there is until the meeting. Start at the current time and count forward to the meeting time."},
+
+{level:"Money",skill:"Money",type:"mc",q:"A sandwich costs $6 and a drink costs $2. How much do they cost together?",choices:["$4","$8","$10","$12"],answer:"$8",help:"“Together” means combine the two prices. Try adding."},
+{level:"Money",skill:"Money",type:"mc",q:"Your total is $7. You pay with $10. How much change should you get?",choices:["$2","$3","$7","$17"],answer:"$3",help:"You are finding how much money should come back to you. Find the difference between what you PAID and the TOTAL. Try subtracting."},
+{level:"Money",skill:"Money",type:"mc",q:"A snack is $3.50 and a drink is $1.50. What is the total?",choices:["$4.00","$4.50","$5.00","$5.50"],answer:"$5.00",help:"You need the total cost. Combine the two prices by adding."},
+
+{level:"Groups",skill:"Groups",type:"mc",q:"Each room needs 2 boxes of gloves. You are stocking 4 rooms. How many boxes do you need altogether?",choices:["6","8","10","12"],answer:"8",help:"You have equal groups. You can solve this with repeated addition or multiplication."},
+{level:"Groups",skill:"Groups",type:"number",q:"Each tray needs 3 napkins. You are setting up 5 trays. How many napkins do you need?",answer:"15",help:"You have equal groups. You can solve this with repeated addition or multiplication."},
+{level:"Groups",skill:"Groups",type:"mc",q:"There are 4 shelves. Each shelf gets 5 boxes. How many boxes are needed?",choices:["9","15","20","25"],answer:"20",help:"You have equal groups. You can solve this with repeated addition or multiplication."},
+
+
+{level:"Do I Have Enough?",skill:"Do I Have Enough?",type:"mc",q:"You need 12 towels for a task. You have 14 towels. Do you have enough?",choices:["YES","NO"],answer:"YES",help:"Compare how many towels you NEED with how many towels you HAVE. You have enough if the amount you have is the same as or greater than the amount you need."},
+{level:"Do I Have Enough?",skill:"Do I Have Enough?",type:"mc",q:"You need 20 masks to stock an area. You have 17 masks. Do you have enough?",choices:["YES","NO"],answer:"NO",help:"Compare how many masks you NEED with how many masks you HAVE. You need at least the required amount to have enough."},
+{level:"Do I Have Enough?",skill:"Do I Have Enough?",type:"mc",q:"You need 8 boxes of gloves. You have exactly 8 boxes. Do you have enough?",choices:["YES","NO"],answer:"YES",help:"Compare the amount you NEED with the amount you HAVE. Having exactly the amount you need counts as enough."},
+{level:"Do I Have Enough?",skill:"Do I Have Enough?",type:"mc",q:"There are 6 patient rooms. Each room needs 2 gowns. You have 10 gowns. Do you have enough for all 6 rooms?",choices:["YES","NO"],answer:"NO",help:"First figure out how many gowns are needed for ALL of the rooms. Then compare that total with the 10 gowns you have.",moreHelpCustom:`First find how many gowns you NEED:<br><strong>6 × 2 = ?</strong><br><br>
+Then use that answer as your <strong>NEED</strong> number.<br><br>
+Put <strong>HAVE − NEED</strong> in your calculator:<br><strong>10 − your NEED number = ?</strong><br><br>
+Then look at the answer on your calculator:<br>
+<strong>Positive number</strong> (1, 2, 3, etc.) = more than you need → <strong>YES, you have enough.</strong><br>
+<strong>0</strong> = exactly enough → <strong>YES, you have enough.</strong><br>
+<strong>Negative number</strong> (−1, −2, −3, etc.) = less than you need → <strong>NO, you do not have enough.</strong>`},
+
+{level:"Use a Reference",skill:"Use a Reference",type:"mc",q:"Use the supply chart. You count 9 gowns. How many more gowns are needed?",choices:["3","6","9","15"],answer:"6",help:"First use the chart to find the goal for gowns. Then compare the goal with how many you counted. Find how many are missing.",ref:[["Supply","Goal"],["Masks","20"],["Gowns","15"],["Gloves","30"],["Towels","12"]]},
+{level:"Use a Reference",skill:"Use a Reference",type:"mc",q:"Use the supply chart. You count 18 masks. How many more masks are needed?",choices:["0","2","18","38"],answer:"2",help:"First use the chart to find the goal for masks. Then compare the goal with how many you counted. Find how many are missing.",ref:[["Supply","Goal"],["Masks","20"],["Gowns","15"],["Gloves","30"],["Towels","12"]]},
+{level:"Use a Reference",skill:"Use a Reference",type:"mc",q:"Use the supply chart. You count 14 towels. How many towels do you need to add?",choices:["0","2","12","26"],answer:"0",help:"Use the chart to find the towel goal. Compare that goal with how many towels you counted. Think about whether you need to add any.",ref:[["Supply","Goal"],["Masks","20"],["Gowns","15"],["Gloves","30"],["Towels","12"]]},
+
+{level:"Workday Challenge",skill:"Mixed",type:"mc",q:"You need 10 clean cloths for the morning and 10 for the afternoon. How many clean cloths do you need for the whole day?",choices:["10","15","20","30"],answer:"20",help:"You need the amount for the whole day. Combine the morning amount and the afternoon amount by adding."},
+{level:"Workday Challenge",skill:"Mixed",type:"mc",q:"Your task starts at 8:40 AM and takes 30 minutes. What time should you finish?",choices:["9:00 AM","9:10 AM","9:20 AM","9:30 AM"],answer:"9:10 AM",help:"This asks when the task will end. Start at the beginning time and count forward by the length of the task."},
+{level:"Workday Challenge",skill:"Mixed",type:"mc",q:"A cart needs 24 items. You have already stocked 16. How many more items do you need?",choices:["6","8","16","40"],answer:"8",help:"Find the difference between the goal and what is already there. Try subtracting."},
+{level:"Workday Challenge",skill:"Mixed",type:"mc",q:"Each of 3 tables needs 4 place settings. How many place settings are needed altogether?",choices:["7","10","12","16"],answer:"12",help:"You have equal groups. You can solve this with repeated addition or multiplication."}
+];
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function buildQuestionSet(){
+  const core=["Counting & Adding","How Many More?","Time","Money","Groups","Do I Have Enough?","Use a Reference"];
+  const picked=[], used=new Set();
+  for(const skill of core){
+    const choices=shuffle(questionBank.map((q,i)=>({q,i})).filter(x=>x.q.skill===skill));
+    if(choices.length){picked.push(choices[0].q);used.add(choices[0].i);}
+  }
+  const rest=shuffle(questionBank.map((q,i)=>({q,i})).filter(x=>!used.has(x.i)));
+  for(const x of rest){if(picked.length>=15)break;picked.push(x.q);}
+  return shuffle(picked);
+}
+let questions=buildQuestionSet();
+
+let state = {name:"", i:0, selected:null, attempts:0, helpUsed:false, moreHelpUsed:false, records:[], recordedCurrent:false};
+// Google Sheets reporting. Keeps a local backup queue if a submission cannot be sent.
+const RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyIDvrjg-dQ3MG_zvvawZM4qa_4bEwQLn3TbHx4DXX_bFb1YMjktBDjAacW81W6LFjq/exec';
+const MATH_QUEUE_KEY = 'math_at_work_pending_v1';
+let mathSessionId = makeMathSessionId();
+let mathSending = false;
+let mathPending = [];
+function makeMathSessionId(){return 'math-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,12)}
+function mathStatus(message){const el=document.getElementById('onlineSaveStatus');if(el)el.textContent='Online results: '+message}
+function mathLoadPending(){try{const v=JSON.parse(localStorage.getItem(MATH_QUEUE_KEY)||'[]');return Array.isArray(v)?v:[]}catch(_){return []}}
+function mathStorePending(){try{localStorage.setItem(MATH_QUEUE_KEY,JSON.stringify(mathPending))}catch(_){mathStatus('Device storage is unavailable. Use Download Results as a backup.')}}
+function mathQueueResult(question,record,questionNumber){
+  const firstName=state.name.trim();
+  const payload={game:'Math at Work',firstName,sessionId:mathSessionId,
+    submissionId:mathSessionId+'-'+questionNumber,questionNumber,
+    question:question.q,skill:question.skill,level:question.level,
+    result:record.help?'With help':record.attempts>1?'Self-corrected':'Independent',
+    hints:Number(record.help)+Number(record.moreHelp),incorrectClicks:Math.max(0,record.attempts-1),
+    moreHelp:record.moreHelp,completedAt:new Date().toISOString()};
+  mathPending.push(payload);mathStorePending();mathFlushPending();
+}
+async function mathFlushPending(){
+  if(mathSending||!navigator.onLine||!mathPending.length)return;
+  mathSending=true;
+  mathStatus('Sending '+mathPending.length+' completed question(s) to Google Sheets…');
+  try{
+    while(mathPending.length){
+      const p=mathPending[0];
+      await fetch(RESULTS_ENDPOINT,{method:'POST',mode:'no-cors',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)});
+      // no-cors does not let us read Google's reply; check the Sheet to confirm the test.
+      mathPending.shift();mathStorePending();
+    }
+    mathStatus('Sent to Google Sheets (please check the Math at Work tab to confirm).');
+  }catch(_){mathStatus('Could not send. Results are queued on this device; use Download Results as backup.');}
+  finally{mathSending=false;}
+}
+mathPending=mathLoadPending();
+window.addEventListener('online',mathFlushPending);
+if(mathPending.length)mathFlushPending();
+
+
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));}
+function renderStart(){
+ document.getElementById("progressWrap").style.display="none";
+ document.getElementById("main").innerHTML=`
+ <section class="card">
+   <h1>Math at Work</h1>
+   <p class="big">Practice the kind of math people use during a workday.</p>
+   <div class="start-grid">
+     <div class="note"><strong>Read the problem.</strong><br>Figure out what the question is asking.</div>
+     <div class="note"><strong>Answer it.</strong><br>Then choose <b>Check My Work</b>.</div>
+     <div class="note"><strong>Stuck?</strong><br>Choose <b>💡 I Need Help</b>. Help gives you a strategy — not the answer.</div>
+     <div class="note"><strong>Try again.</strong><br>Getting something wrong the first time is okay.</div>
+   </div>
+   <p><strong>Good workers use resources when they need them.</strong> Using the Help button does not count against you.</p>
+   <h3>Your name or initials</h3>
+   <input id="name" type="text" maxlength="40" aria-label="Your name or initials">
+   <div class="actions">
+     <button class="primary" onclick="startGame()">Start</button>
+   </div>
+ </section>`;
+}
+function startGame(){
+ const n=document.getElementById("name").value.trim();
+ if(!n){alert("Please enter your name or initials.");return;}
+ state.name=n; state.i=0; state.records=[]; state.recordedCurrent=false; mathSessionId=makeMathSessionId(); renderQuestion();
+}
+function refHTML(ref){
+ if(!ref)return "";
+ return `<div class="refbox"><strong>Reference</strong><table>${ref.map((r,idx)=>`<tr>${r.map(c=>idx===0?`<th>${esc(c)}</th>`:`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</table></div>`;
+}
+function renderQuestion(){
+ const q=questions[state.i];
+ state.selected=null; state.attempts=0; state.helpUsed=false; state.moreHelpUsed=false; state.recordedCurrent=false;
+ document.getElementById("progressWrap").style.display="block";
+ document.getElementById("progressLabel").textContent=`Question ${state.i+1} of ${questions.length}`;
+ document.getElementById("progressBar").style.width=`${(state.i/questions.length)*100}%`;
+ let answerHTML="";
+ if(q.type==="mc"){
+   answerHTML=`<div class="choices">${q.choices.map(c=>`<button class="choice" onclick="pick(this,'${c.replace(/'/g,"\\'")}')">${esc(c)}</button>`).join("")}</div>`;
+ }else{
+   answerHTML=`<p><input id="numAnswer" type="number" inputmode="numeric" aria-label="Answer"></p>`;
+ }
+ document.getElementById("main").innerHTML=`
+ <section class="card">
+   <div class="level-tag">${esc(q.level)} · ${esc(q.skill)}</div>
+   ${refHTML(q.ref)}
+   <div class="problem">${esc(q.q)}</div>
+   ${answerHTML}
+   <div class="actions">
+     <button class="primary" onclick="checkAnswer()">Check My Work</button>
+     <button class="help" onclick="showHelp()">💡 I Need Help</button>
+     <button class="secondary" onclick="downloadProgress()">Download My Progress</button>
+   </div>
+   <div id="helpbox" class="helpbox">
+     <strong>💡 Here's a strategy:</strong>${esc(q.help)}
+     <div class="actions"><button class="secondary" onclick="showMoreHelp()">🛟 I Need More Help</button></div>
+     <div id="morehelpbox" class="helpbox" style="background:#fff;display:none">
+       <strong>🛟 Let's set it up:</strong>
+       ${moreHelpFor(q)}
+     </div>
+   </div>
+   <div id="feedback" class="feedback"></div>
+<div id="nextbar" class="nextbar" style="display:none"><button class="primary" onclick="nextQuestion()">Next Question →</button></div>
+ </section>`;
+}
+function pick(btn,val){
+ document.querySelectorAll(".choice").forEach(b=>b.classList.remove("selected"));
+ btn.classList.add("selected"); state.selected=val;
+}
+
+
+function haveNeedExplanation(have, need, mode="enough"){
+  if(mode==="restock"){
+    return `<div class="help-line">Put <strong>NEED − HAVE</strong> in your calculator:</div>
+<div class="help-line"><strong>${need} − ${have} = ?</strong></div>
+<div class="help-gap"></div>
+<div class="help-line">Then look at the answer on your calculator:</div>
+<div class="help-line"><strong>Positive number</strong> (1, 2, 3, etc.) = you do not have enough. The number tells you <strong>how many to add</strong>.</div>
+<div class="help-line"><strong>0</strong> = you have exactly enough. Add <strong>0</strong>.</div>
+<div class="help-line"><strong>Negative number</strong> (−1, −2, −3, etc.) = you have more than you need. Add <strong>0</strong>.</div>`;
+  }
+  return `<div class="help-line">Put <strong>HAVE − NEED</strong> in your calculator:</div>
+<div class="help-line"><strong>${have} − ${need} = ?</strong></div>
+<div class="help-gap"></div>
+<div class="help-line">Then look at the answer on your calculator:</div>
+<div class="help-line"><strong>Positive number</strong> (1, 2, 3, etc.) = more than you need → <strong>YES, you have enough.</strong></div>
+<div class="help-line"><strong>0</strong> = exactly enough → <strong>YES, you have enough.</strong></div>
+<div class="help-line"><strong>Negative number</strong> (−1, −2, −3, etc.) = less than you need → <strong>NO, you do not have enough.</strong></div>`;
+}
+
+function moreHelpFor(q){
+  if(q.moreHelpCustom) return q.moreHelpCustom;
+  const nums=(q.q.match(/\d+(?:\.\d+)?/g)||[]);
+
+  if(q.subtype==="enoughCheck"){
+    return haveNeedExplanation(nums[1], nums[0], "restock");
+  }
+
+  if(q.subtype==="between"){
+    const times=q.q.match(/\d{1,2}:\d{2}\s*(?:AM|PM)/gi)||[];
+    return `You are finding the time <strong>between</strong> two times.<br><br>
+    Start at the earlier time: <strong>${times[0]||"the earlier time"}</strong><br>
+    Count forward until you reach: <strong>${times[1]||"the later time"}</strong><br><br>
+    Count how many minutes you moved forward.`;
+  }
+
+  if(q.skill==="How Many More?" || (q.skill==="Mixed" && /more|already stocked/i.test(q.q))){
+    if(nums.length>=2) return haveNeedExplanation(nums[1], nums[0], "restock");
+    return `Start with how many you <strong>NEED</strong>. Subtract how many you <strong>HAVE</strong>.`;
+  }
+
+  if(q.skill==="Counting & Adding" || (q.skill==="Mixed" && /whole day/i.test(q.q))){
+    if(nums.length>=2) return `Set it up like this:<br><strong>${nums[0]} + ${nums[1]} = ?</strong>`;
+    return `Write the two groups with a <strong>+</strong> sign between them.`;
+  }
+
+  if(q.skill==="Groups" || (q.skill==="Mixed" && /Each of|each/i.test(q.q))){
+    if(nums.length>=2){
+      const groups=Number(nums[0]), each=Number(nums[1]);
+      const repeated=Array.from({length:Math.min(groups,8)},()=>each).join(" + ");
+      return `You can set this up TWO ways:<br><br>
+      <strong>Repeated addition:</strong><br>${repeated} = ?<br><br>
+      <strong>OR multiplication:</strong><br>${groups} × ${each} = ?`;
+    }
+    return `Use repeated addition OR multiplication.`;
+  }
+
+  if(q.skill==="Money"){
+    if(/change/i.test(q.q) && nums.length>=2) return `For change, subtract the total from the amount paid:<br><strong>${nums[1]} − ${nums[0]} = ?</strong>`;
+    if(nums.length>=2) return `Put the prices together:<br><strong>${nums[0]} + ${nums[1]} = ?</strong>`;
+  }
+
+  if(q.skill==="Time" || (q.skill==="Mixed" && /AM|PM/i.test(q.q))){
+    return `Write down the <strong>START time</strong>. Then count forward the number of minutes the task lasts.`;
+  }
+
+  if(q.skill==="Use a Reference"){
+    if(nums.length>=1){
+      const lower=q.q.toLowerCase();
+      let need = lower.includes("gown") ? 15 : lower.includes("mask") ? 20 : lower.includes("glove") ? 30 : lower.includes("towel") ? 12 : null;
+      if(need!==null) return haveNeedExplanation(nums[0], need, "restock");
+    }
+    return `Find the goal in the chart. Then compare how many you <strong>NEED</strong> with how many you <strong>HAVE</strong>.`;
+  }
+
+  if(q.skill==="Do I Have Enough?"){
+    if(nums.length>=2) return haveNeedExplanation(nums[1], nums[0], "enough");
+  }
+
+  return `Write the numbers from the problem on paper. Decide whether you are putting amounts together (+) or finding the difference (−).`;
+}
+function showMoreHelp(){
+  state.helpUsed=true; state.moreHelpUsed=true;
+  const box=document.getElementById("morehelpbox");
+  if(box) box.style.display="block";
+}
+
+function showHelp(){
+ state.helpUsed=true;
+ document.getElementById("helpbox").style.display="block";
+}
+function normalize(v){return String(v).trim().replace(/\$/g,"").replace(/\.00$/,"");}
+
+function showNextQuestionButton(){
+  const nb=document.getElementById("nextbar");
+  if(nb){
+    nb.style.display="block";
+  }
+}
+function checkAnswer(){
+ if(state.recordedCurrent)return;
+ const q=questions[state.i];
+ let val=q.type==="mc"?state.selected:(document.getElementById("numAnswer")?.value ?? "");
+ if(val===null || String(val).trim()===""){alert("Choose or enter an answer first.");return;}
+ state.attempts++;
+ const correct=normalize(val)===normalize(q.answer);
+ const fb=document.getElementById("feedback");
+ if(correct){
+   fb.className="feedback good";
+   fb.innerHTML=`<strong>Nice work!</strong> You got it.${state.helpUsed ? " You used a resource and then solved the problem — that is a workplace skill." : ""}`;
+   const record={skill:q.skill,level:q.level,help:state.helpUsed,moreHelp:state.moreHelpUsed,attempts:state.attempts,correct:true};
+   state.records.push(record); state.recordedCurrent=true;
+   mathQueueResult(q,record,state.i+1);
+   showNextQuestionButton();
+ }else{
+   fb.className="feedback try";
+   fb.innerHTML=`<strong>Not quite. Try again.</strong><br>Check your numbers and think about what the question is asking. You can use <b>I Need Help</b> if you're stuck.`;
+ }
+}
+function nextQuestion(){
+ if(!state.recordedCurrent)return;
+ state.i++;
+ if(state.i>=questions.length) renderResults(); else renderQuestion();
+}
+function summary(){
+ const skills=["Counting & Adding","How Many More?","Time","Money","Groups","Do I Have Enough?","Use a Reference","Mixed"];
+ const rows=[];
+ skills.forEach(skill=>{
+   const rs=state.records.filter(r=>r.skill===skill);
+   if(!rs.length)return;
+   const helps=rs.filter(r=>r.help).length;
+   const retries=rs.reduce((a,r)=>a+Math.max(0,r.attempts-1),0);
+   let label="⭐ Independent";
+   if(helps>0 && retries<=rs.length) label="💡 Used Help Successfully";
+   if(retries>rs.length) label="🔄 Keep Practicing";
+   rows.push([skill,label,rs.length,helps,retries]);
+ });
+ return rows;
+}
+function renderResults(){
+ document.getElementById("progressBar").style.width="100%";
+ document.getElementById("progressLabel").textContent="Complete!";
+ const helps=state.records.filter(r=>r.help).length;
+ const retries=state.records.reduce((a,r)=>a+Math.max(0,r.attempts-1),0);
+ const moreHelps=state.records.filter(r=>r.moreHelp).length;
+ const rows=summary();
+ document.getElementById("main").innerHTML=`
+ <section class="card">
+   <h1>Nice work, ${esc(state.name)}!</h1>
+   <p class="big">You completed <strong>Math at Work</strong>.</p>
+   <div class="results-grid">
+     ${rows.map(r=>`<div class="result-row"><strong>${esc(r[0])}</strong><br>${esc(r[1])}<div class="small muted">${r[2]} questions · Help used ${r[3]} time(s)</div></div>`).join("")}
+   </div>
+   <h3>Your work habits</h3>
+   <p>You used <strong>I Need Help ${helps} time(s)</strong>.</p><p>You used <strong>I Need More Help ${moreHelps} time(s)</strong>.</p>
+   <p>You made <strong>${retries} successful retry/retries</strong> after an answer did not work the first time.</p>
+   <div class="note"><strong>Remember:</strong> Using a resource when you are stuck is a workplace skill.</div>
+   <div class="actions">
+     <button class="primary" onclick="downloadProgress(true)">Download My Results</button>
+     <button class="secondary" onclick="window.print()">Print / Save as PDF</button>
+     <button class="secondary" onclick="renderStart()">Start Over</button>
+   </div>
+ </section>`;
+}
+function progressText(final=false){
+ const completed=state.records.length;
+ const helps=state.records.filter(r=>r.help).length;
+ const retries=state.records.reduce((a,r)=>a+Math.max(0,r.attempts-1),0);
+ const moreHelps=state.records.filter(r=>r.moreHelp).length;
+ let t=`MATH AT WORK\nStudent: ${state.name}\nCompleted: ${completed} of ${questions.length} questions\nHelp used: ${helps} time(s)\nMore help used: ${moreHelps} time(s)\nSuccessful retries: ${retries}\n`;
+ if(final || completed===questions.length){
+   t+=`\nSKILL SUMMARY\n`;
+   summary().forEach(r=>{t+=`${r[0]}: ${r[1]} (${r[2]} questions; help ${r[3]} time(s); retries ${r[4]})\n`;});
+ }
+ t+=`\nUsing a resource when you are stuck is a workplace skill.\n`;
+ return t;
+}
+function downloadProgress(final=false){
+ const blob=new Blob([progressText(final)],{type:"text/plain"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ const safe=state.name.replace(/[^a-z0-9_-]+/gi,"_") || "student";
+ a.download=`Math_at_Work_${safe}${final?"_Results":"_Progress"}.txt`;
+ a.click(); URL.revokeObjectURL(a.href);
+}
+renderStart();
+</script>
+</body>
+</html>
